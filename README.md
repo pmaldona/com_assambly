@@ -45,6 +45,7 @@ The inputs defines model and interaction type of the community matrix, and condi
  #### Model
 Our goal is analize the stablitiy and feasibility of matrix a bases dynamics ecology system model. Where the vector biomases <img src="https://latex.codecogs.com/svg.latex?\Large&space;\bold{x}"> a  determined by:
 
+<%5Cdot%7B%5Cbold%7Bx%7D%7D%3D%5Cbold%7Bx%7D%5Cleft%28%5Cbold%7Br%7D+%2B+%5Cbold%7BA%7D+%5Cbold%7Bx%7D%5Cright%29>
 <img src="https://latex.codecogs.com/svg.latex?\Large&space;\dot{\bold{x}}=\bold{x}\left(\bold{r} + \bold{A} \bold{x}\right)">
 
 Here <img src="https://latex.codecogs.com/svg.latex?\Large&space;\bold{A}"> is known as Community Matrix, and  <img src="https://latex.codecogs.com/svg.latex?\Large&space;\bold{r}"> as grow rate. 
