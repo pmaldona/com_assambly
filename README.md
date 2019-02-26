@@ -15,6 +15,8 @@ A *Matlab* class that generates an ecological community assambly by adding speci
 -- [Init assambly](https://github.com/pmaldona/com_assambly#init-assambly-nt_subcommunity_init_links)
 ---[Inputs](https://github.com/pmaldona/com_assambly#inputs-1)
 ---[Model](https://github.com/pmaldona/com_assambly#model-1)
+---[Outputs](https://github.com/pmaldona/com_assambly#outputs-1)
+---[Add to assambly]
 
 
 ## Class
@@ -154,7 +156,7 @@ Constructions of sub-community starts from the master community (first initalize
 #### Outputs 
 Returns a class object as constructor `NT_community`
 
-### Add assambly `NT_SubComunity_add_Links`
+### Add to assambly `NT_SubComunity_add_Links`
 Call: `Sc=NT_SubComunity_add_Links(Si,C,S)`
 #### Inputs
 - `S` Number of desire species to add
