@@ -47,11 +47,11 @@ Our goal is analize the stablitiy and feasibility of matrix a bases dynamics eco
 
 ![img](https://latex.codecogs.com/svg.latex?\dot{\bold{x}}=\bold{x}\left(\bold{r}+\bold{A}\bold{x}\right))
 
-Here <img src="https://latex.codecogs.com/svg.latex?\Large&space;\bold{A}"> is known as Community Matrix, and  <img src="https://latex.codecogs.com/svg.latex?\Large&space;\bold{r}"> as grow rate. 
+Here <img src="https://latex.codecogs.com/svg.latex?\bold{A}"> is known as Community Matrix, and  <img src="https://latex.codecogs.com/svg.latex?\bold{r}"> as grow rate. 
 
-In first instace, initial tropic interactions are obtainend form the `Tr` matrix, this will be defined as trophic skeleton. The number <img src="https://latex.codecogs.com/svg.latex?\Large&space;n"> of species correspond to the `Tr`matrix dimension. A requirment for `Tr` is to be fully conected. Interactions are added by type proportional to values `cp`, `mu`, `cm`, `am` ,`an` according to the total connectance <img src="https://latex.codecogs.com/svg.latex?\Large&space;n(n-1)/2">. The position of the interactions are randomly choosen proportional to an funtion depends on the trophic levels if the interacting species. This function correspond to:
+In first instace, initial tropic interactions are obtainend form the `Tr` matrix, this will be defined as trophic skeleton. The number <img src="https://latex.codecogs.com/svg.latex?n"> of species correspond to the `Tr`matrix dimension. A requirment for `Tr` is to be fully conected. Interactions are added by type proportional to values `cp`, `mu`, `cm`, `am` ,`an` according to the total connectance <img src="https://latex.codecogs.com/svg.latex?\Large&space;n(n-1)/2">. The position of the interactions are randomly choosen proportional to an funtion depends on the trophic levels if the interacting species. This function correspond to:
 
-<img src="https://latex.codecogs.com/svg.latex?\Large&space;\mathbb{P}_{ij} \propto f_d(tl_n(i))\exp\left({\frac{|tl_n(i)-tl_n(j)|-\mu_{it}}{\sigma_r}}\right)">
+[img]!(https://latex.codecogs.com/svg.latex?\mathbb{P}_{ij}\propto%20f_d(tl_n(i))\exp\left({\frac{|tl_n(i)-tl_n(j)|-\mu_{it}}{\sigma_r}}\right))
 
 where <img src="https://latex.codecogs.com/svg.latex?\Large&space;tl_n(i)"> is the normalized trophic level ([Livine](https://www.sciencedirect.com/science/article/pii/002251938090288X)) of species <img src="https://latex.codecogs.com/svg.latex?\Large&space;i">, <img src="https://latex.codecogs.com/svg.latex?\Large&space;f_d"> correspond to the `dfn` function (matlab `@` call), and <img src="https://latex.codecogs.com/svg.latex?\Large&space;\mu_{ti}"> and <img src="https://latex.codecogs.com/svg.latex?\Large&space;\sigma_r"> correspondo to `mit`and `rit` respectivly. In the adding interaction process, the basal species of `Tr` are preserved. Finally the bool value `bc` add competition between basal species.
 
