@@ -3,8 +3,15 @@
 A *Matlab* class that generates an ecological community assambly by adding species in funtion of their trophic relation. 
 ## Contents
 
-- [Class](https://github.com/pmaldona/com_assembly#class)
--- [Constructor](https://github.com/pmaldona/com_assembly##constructor)
+- [Class](https://github.com/pmaldona/com_assambly#class)
+ -- [Constructor](https://github.com/pmaldona/com_assambly#constructor-nt_community)
+ --- [Inputs](https://github.com/pmaldona/com_assambly#inputs)
+ --- [Model](https://github.com/pmaldona/com_assambly#model)
+ --- [Outputs](https://github.com/pmaldona/com_assambly#outputs)
+ ---- [Matrices](https://github.com/pmaldona/com_assambly#matrices)
+ ---- [Vectors](https://github.com/pmaldona/com_assambly#vectors)
+ ---- [Double](https://github.com/pmaldona/com_assambly#doubles)
+ ---- []
 
 
 ## Class
