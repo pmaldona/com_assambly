@@ -71,7 +71,7 @@ so we have:
 
 <img src="https://latex.codecogs.com/svg.latex?\bold{r}=-\bold{A}\bold{x^*}">
 
-<img src="https://latex.codecogs.com/svg.latex?\Large&space;\bold{x}^*"> represents satbility point for the biomases. At this point we have freedom of choise for the grow rate <img src="https://latex.codecogs.com/svg.latex?\bold{r}"> and so <img src="https://latex.codecogs.com/svg.latex?\bold x^*"> due there are releted by lineal transformation. To solve this, we search the feasibility via an LP-optimization that maximize the minimal of bioases <img src="https://latex.codecogs.com/svg.latex?\text{min}(\{x_i\})"> holding the related equality, boundig the grow rates via a Chebyshov norm, <img src="https://latex.codecogs.com/svg.latex?\|\bold{r}\|_{\infty}<m_r"> and lower bound non-basal grow rates <img src="https://latex.codecogs.com/svg.latex?r_i>m_m">.   Here <img src="https://latex.codecogs.com/svg.latex?m_m="> `min_mort` and <img src="https://latex.codecogs.com/svg.latex?m_r="> `max_r`. 
+<img src="https://latex.codecogs.com/svg.latex?\Large&space;\bold{x}^*"> represents satbility point for the biomases. At this point we have freedom of choise for the grow rate <img src="https://latex.codecogs.com/svg.latex?\bold{r}"> and so <img src="https://latex.codecogs.com/svg.latex?\bold{x}^*"> due there are releted by lineal transformation. To solve this, we search the feasibility via an LP-optimization that maximize the minimal of bioases <img src="https://latex.codecogs.com/svg.latex?\text{min}(\{x_i\})"> holding the related equality, boundig the grow rates via a Chebyshov norm, <img src="https://latex.codecogs.com/svg.latex?\|\bold{r}\|_{\infty}<m_r"> and lower bound non-basal grow rates <img src="https://latex.codecogs.com/svg.latex?r_i>m_m">.   Here <img src="https://latex.codecogs.com/svg.latex?m_m="> `min_mort` and <img src="https://latex.codecogs.com/svg.latex?m_r="> `max_r`. 
 
 #### Outputs
 
@@ -124,7 +124,7 @@ The output constitute a structure where can be obtained a set of properties and 
 
 Resilence is equal to minus the maximun eiqgenvalue of the Jacobiean evaluated at the stablity point <img src="https://latex.codecogs.com/svg.latex?\bold{x}^*">:
 
-<img src="https://latex.codecogs.com/svg.latex?R=-\lambda^{\uparrow}_1(J(x^*))=-\lambda^{\uparrow}_1(\text{diag}(\bold{x}^*)\bold A)">
+<img src="https://latex.codecogs.com/svg.latex?R=-\lambda^{\uparrow}_1(J(x^*))=-\lambda^{\uparrow}_1(\text{diag}(\bold{x}^*)\bold{A})">
 
 So, if <img src="https://latex.codecogs.com/svg.latex?\Large&space;R>0"> then the community is localy satble, if <img src="https://latex.codecogs.com/svg.latex?\Large&space;R<0"> then is localy instable.
 
@@ -140,7 +140,7 @@ Call: `Sc=NT_SubComunity_init_Links(C,S)`
 - `S` Number of desire species on sub-community
 - `C` Master community Class object
 #### Model
-Constructions of sub-community starts from the master community (first initalized community). The process of assambly begins by taking an basal species. Once achived this, candidates to add are direct predetors of present species or new basal ones. This algorithm iterates until the `S` species are reached. The grow rates of the sub-community are directly taked from the master community `C` grow rates, as a subset of the present species. Sub-Community matrix is constructed in the same way as the master community, but only considering the susbet species in the sub-community. Then biomasses is calculeted via the known lineal trasnformation (<img src="https://latex.codecogs.com/svg.latex?\Large&space;\bold{r}=-\bold{A}\bold{x^*}">) and finally all other propertires (resilence, min of biomasses, etc.).
+Constructions of sub-community starts from the master community (first initalized community). The process of assambly begins by taking an basal species. Once achived this, candidates to add are direct predetors of present species or new basal ones. This algorithm iterates until the `S` species are reached. The grow rates of the sub-community are directly taked from the master community `C` grow rates, as a subset of the present species. Sub-Community matrix is constructed in the same way as the master community, but only considering the susbet species in the sub-community. Then biomasses is calculeted via the known lineal trasnformation (<img src="https://latex.codecogs.com/svg.latex?\Large&space;\bold{r}=-\bold{A}\bold{x}^*">) and finally all other propertires (resilence, min of biomasses, etc.).
 ### Outputs 
 Returns a class object as constructor `NT_community`
 
