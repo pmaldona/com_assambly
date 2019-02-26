@@ -3,15 +3,8 @@
 A *Matlab* class that generates an ecological community assambly by adding species in funtion of their trophic relation. 
 ## Contents
 
-- [Class](https://github.com/pmaldona/com_assambly#class)
- -- [Constructor](https://github.com/pmaldona/com_assambly#constructor-nt_community)
- --- [Inputs](https://github.com/pmaldona/com_assambly#inputs)
- --- [Model](https://github.com/pmaldona/com_assambly#model)
- --- [Outputs](https://github.com/pmaldona/com_assambly#outputs)
- ---- [Matrices](https://github.com/pmaldona/com_assambly#matrices)
- ---- [Vectors](https://github.com/pmaldona/com_assambly#vectors)
- ---- [Double](https://github.com/pmaldona/com_assambly#doubles)
- ---- []
+- [Class](https://github.com/pmaldona/com_assembly#class)
+-- [Constructor](https://github.com/pmaldona/com_assembly##constructor)
 
 
 ## Class
@@ -20,7 +13,7 @@ The class in defined in the file [NTCommunity.m](https://github.com/pmaldona/com
 
 ### Constructor `NT_Community`
 
-The constructor can be called by:
+Call:
 `NT_community(Tr,cp,fcp,mu,fmu,cm,fcm,am,fam,dnt,an,fan,rit,mit,fas,mnti,nbf,sg,sgd,tsp,msp,max_r,bc)`
 
 #### Inputs
@@ -78,7 +71,7 @@ so we have:
 
 $$\bold{r}=-\bold{A}\bold{x^*}$$
 
-$$\bold x^*$$ represents satbility point for the biomases. At this point we have freedom of choise for the grow rate $$\bold r$$ and so $$\bold x^*$$ due there are releted by lineal transformation. To solve this, we search the factibility via an LP-optimization that maximize the minimal of bioases $$\text{min}(\{x_i\})$$ holding the related equality, boundig the grow rates via a Chebyshov norm, $$\|\bold{r}\|_{\infty}< m_r$$ and lower bound non-basal grow rates $$r_i>m_m$$.   Here $$m_m=$$ `min_mort` and $$m_r=$$ `max_r`. 
+$$\bold x^*$$ represents satbility point for the biomases. At this point we have freedom of choise for the grow rate $$\bold r$$ and so $$\bold x^*$$ due there are releted by lineal transformation. To solve this, we search the feasibility via an LP-optimization that maximize the minimal of bioases $$\text{min}(\{x_i\})$$ holding the related equality, boundig the grow rates via a Chebyshov norm, $$\|\bold{r}\|_{\infty}< m_r$$ and lower bound non-basal grow rates $$r_i>m_m$$.   Here $$m_m=$$ `min_mort` and $$m_r=$$ `max_r`. 
 
 #### Outputs
 
@@ -135,25 +128,30 @@ $$R=-\lambda^{\uparrow}_1(J(x^*))=-\lambda^{\uparrow}_1(\text{diag}(\bold x^*) \
 
 So, if $$R > 0$$ then the community is localy satble, if $$R < 0$$ then is localy instable.
 
-##### Boolsconsidering
-## Init assambly `NT_SubCommunity_init_Links(C,S)`
-### Inputs
+##### Bools
+- `mst` True if community is a aster one (first constructed)
+- `est` True if comunity is locally stable
+- `F` True if community is feasible
+- `bc` True if there are competition between basal species
+- 
+### Init assambly `NT_SubCommunity_init_Links`
+Call: `Sc=NT_SubComunity_init_Links(C,S)`
+#### Inputs
 - `S` Number of desire species on sub-community
 - `C` Master community Class object
- 
-### Model
+#### Model
 Constructions of sub-community starts from the master community (first initalized community). The process of assambly begins by taking an basal species. Once achived this, candidates to add are direct predetors of present species or new basal ones. This algorithm iterates until the `S` species are reached. The grow rates of the sub-community are directly taked from the master community `C` grow rates, as a subset of the present species. Sub-Community matrix is constructed in the same way as the master community, but only considering the susbet species in the sub-community. Then biomasses is calculeted via the known lineal trasnformation ($$\bold{r}=-\bold{A}\bold{x^*}$$) and finally all other propertires (resilence, min of biomasses, etc.).
-
 ### Outputs 
 Returns a class object as constructor `NT_community`
 
-## Add assambly `Sc=NT_SubComunity_add_Links(Si,C,S)`
-
-Constructor of sub-community starting of the sub-community with the desierd species.
-
+### Add assambly `NT_SubComunity_add_Links`
+Call: `Sc=NT_SubComunity_add_Links(Si,C,S)`
+#### Inputs
 - `S` Number of desire species to add
 - `C` Master community Class object
 - `Si` Sub-community Class object
- 
-Returns a class object with sam properties
-
+ #### Model
+Constructor of sub-community starting of the sub-community `Si` adding `S` desierd species from master community `C`.
+Has the same porcedure as ``NT_SubCommunity_init_Links``
+#### Outputs
+Returns a class object as constructor `NT_community`
