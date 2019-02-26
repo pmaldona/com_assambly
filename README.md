@@ -79,7 +79,7 @@ The output constitute a structure where can be obtained a set of properties and 
 
 ##### Matrices
 - `adj` Adjoint matrix of the community
-- `com` Community matrix (<img src="https://latex.codecogs.com/svg.latex?\Large&space;\bold A">)
+- `com` Community matrix (<img src="https://latex.codecogs.com/svg.latex?\bold{A}">)
 - `tr` Trophic matrix
 - `tr_i` Trophic skeleton
 - `tp` Type interaction matrix
@@ -122,9 +122,9 @@ The output constitute a structure where can be obtained a set of properties and 
 - `L` minimal of biomasses
 - `L_tr` minimal of biomasses of the trophic skeleton community
 
-Resilence is equal to minus the maximun eiqgenvalue of the Jacobiean evaluated at the stablity point <img src="https://latex.codecogs.com/svg.latex?\Large&space;\bold x^*">:
+Resilence is equal to minus the maximun eiqgenvalue of the Jacobiean evaluated at the stablity point <img src="https://latex.codecogs.com/svg.latex?\bold{x}^*">:
 
-<img src="https://latex.codecogs.com/svg.latex?R=-\lambda^{\uparrow}_1(J(x^*))=-\lambda^{\uparrow}_1(\text{diag}(\bold x^*)\bold A)">
+<img src="https://latex.codecogs.com/svg.latex?R=-\lambda^{\uparrow}_1(J(x^*))=-\lambda^{\uparrow}_1(\text{diag}(\bold{x}^*)\bold A)">
 
 So, if <img src="https://latex.codecogs.com/svg.latex?\Large&space;R>0"> then the community is localy satble, if <img src="https://latex.codecogs.com/svg.latex?\Large&space;R<0"> then is localy instable.
 
