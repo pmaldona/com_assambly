@@ -4,19 +4,23 @@ A *Matlab* class that generates an ecological community assambly by adding speci
 ## Contents
 
 - [Class](https://github.com/pmaldona/com_assembly#class)
--- [Constructor](https://github.com/pmaldona/com_assambly#constructor-nt_community)
----[Inputs](https://github.com/pmaldona/com_assambly#inputs)
----[Model](https://github.com/pmaldona/com_assambly#model)
----[Outputs](https://github.com/pmaldona/com_assambly#outputs)
-----[Matices](https://github.com/pmaldona/com_assambly#matrices)
-----[Vectors](https://github.com/pmaldona/com_assambly#vectors)
-----[Doubles](https://github.com/pmaldona/com_assambly#doubles)
-----[Bools](https://github.com/pmaldona/com_assambly#bools)
--- [Init assambly](https://github.com/pmaldona/com_assambly#init-assambly-nt_subcommunity_init_links)
----[Inputs](https://github.com/pmaldona/com_assambly#inputs-1)
----[Model](https://github.com/pmaldona/com_assambly#model-1)
----[Outputs](https://github.com/pmaldona/com_assambly#outputs-1)
----[Add to assambly]
+  - [Constructor](https://github.com/pmaldona/com_assambly#constructor-nt_community)
+    - [Inputs](https://github.com/pmaldona/com_assambly#inputs)
+    - [Model](https://github.com/pmaldona/com_assambly#model)
+    - [Outputs](https://github.com/pmaldona/com_assambly#outputs)
+      - [Matices](https://github.com/pmaldona/com_assambly#matrices)
+      - [Vectors](https://github.com/pmaldona/com_assambly#vectors)
+      - [Doubles](https://github.com/pmaldona/com_assambly#doubles)
+      - [Bools](https://github.com/pmaldona/com_assambly#bools)
+  - [Init assambly](https://github.com/pmaldona/com_assambly#init-assambly-nt_subcommunity_init_links)
+    - [Inputs](https://github.com/pmaldona/com_assambly#inputs-1)
+    - [Model](https://github.com/pmaldona/com_assambly#model-1)
+    - [Outputs](https://github.com/pmaldona/com_assambly#outputs-1)
+  - [Add to assambly](https://github.com/pmaldona/com_assambly/blob/master/README.md#add-to-assambly-nt_subcomunity_add_links)
+    - [Inputs](https://github.com/pmaldona/com_assambly#inputs-2)
+    - [Model](https://github.com/pmaldona/com_assambly#model-2)
+    - [Outputs](https://github.com/pmaldona/com_assambly#outputs-2)
+
 
 
 ## Class
