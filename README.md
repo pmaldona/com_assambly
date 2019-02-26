@@ -87,10 +87,10 @@ The output constitute a structure where can be obtained a set of properties and 
 - `coef_b` <img src="https://latex.codecogs.com/svg.latex?\Large&space;b_{ij}"> matrix coeficients
 
 ##### Vectors
-- `Nv` Trophic levels vector (<img src="https://latex.codecogs.com/svg.latex?\Large&space;\bold{tl}">) [Livine](https://www.sciencedirect.com/science/article/pii/002251938090288X)
+- `Nv` Trophic levels vector (<img src="https://latex.codecogs.com/svg.latex?\bold{tl}">) [Livine](https://www.sciencedirect.com/science/article/pii/002251938090288X)
 - `esp` Species index vector
-- `X` Biomasses vector at stability (<img src="https://latex.codecogs.com/svg.latex?\Large&space;\bold x">)
-- `R` Grow rate vector (<img src="https://latex.codecogs.com/svg.latex?\Large&space;\bold r">)
+- `X` Biomasses vector at stability (<img src="https://latex.codecogs.com/svg.latex?\bold{x}">)
+- `R` Grow rate vector (<img src="https://latex.codecogs.com/svg.latex?\bold{r}">)
 - `k` Vector of porcentage of interaction [Wootton & Stouffer](https://link.springer.com/article/10.1007/s12080-015-0279-3)
 - `k_p` Vector of porcentage of positive interaction [Wootton & Stouffer](https://link.springer.com/article/10.1007/s12080-015-0279-3)
 - `k_m` Vector of porcentage of negative interaction [Wootton & Stouffer](https://link.springer.com/article/10.1007/s12080-015-0279-3)
@@ -107,8 +107,8 @@ The output constitute a structure where can be obtained a set of properties and 
 - `am` Porcentage of amensal interactions
 - `cm` Porcentage of comensal interactions
 - `an` Porcentage of trophic interactions
-- `res` Community resilence (<img src="https://latex.codecogs.com/svg.latex?\Large&space;R">)
-- `res_tr` Trophic seleton community resilence (<img src="https://latex.codecogs.com/svg.latex?\Large&space;R">)
+- `res` Community resilence (<img src="https://latex.codecogs.com/svg.latex?R">)
+- `res_tr` Trophic seleton community resilence (<img src="https://latex.codecogs.com/svg.latex?R">)
 - `con` Community connectance
 - `con_tr` Trophic skeleton community connectance
 - `me` Average total interaction faced for one species [Barbier & Arnoldi](http://dx.doi.org/10.1101/147728)
@@ -124,9 +124,9 @@ The output constitute a structure where can be obtained a set of properties and 
 
 Resilence is equal to minus the maximun eiqgenvalue of the Jacobiean evaluated at the stablity point <img src="https://latex.codecogs.com/svg.latex?\Large&space;\bold x^*">:
 
-<img src="https://latex.codecogs.com/svg.latex?\Large&space;R=-\lambda^{\uparrow}_1(J(x^*))=-\lambda^{\uparrow}_1(\text{diag}(\bold x^*) \bold A)">
+<img src="https://latex.codecogs.com/svg.latex?R=-\lambda^{\uparrow}_1(J(x^*))=-\lambda^{\uparrow}_1(\text{diag}(\bold x^*)\bold A)">
 
-So, if <img src="https://latex.codecogs.com/svg.latex?\Large&space;R > 0"> then the community is localy satble, if <img src="https://latex.codecogs.com/svg.latex?\Large&space;R < 0"> then is localy instable.
+So, if <img src="https://latex.codecogs.com/svg.latex?\Large&space;R>0"> then the community is localy satble, if <img src="https://latex.codecogs.com/svg.latex?\Large&space;R<0"> then is localy instable.
 
 ##### Bools
 - `mst` True if community is a aster one (first constructed)
