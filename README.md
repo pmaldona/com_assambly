@@ -43,7 +43,7 @@ The inputs defines model and interaction type of the community matrix, and condi
 - `min_mort` minimum value for de minimal of biomasses (imposition for LP-optimization)
 - `bc` basal competition (bool value, that if it's true, add competition between basal species)
  #### Model
-Our goal is analize the stablitiy and feasibility of matrix a bases dynamics ecology system model. Where the vector biomases $$\bold{x}$$ a  determined by:
+Our goal is analize the stablitiy and feasibility of matrix a bases dynamics ecology system model. Where the vector biomases <img src="https://latex.codecogs.com/svg.latex?\Large&space;\bold{x}"> a  determined by:
 
 $$\dot{\bold{x}}=\bold{x}\left(\bold{r} + \bold{A} \bold{x}\right)$$
 
