@@ -4,12 +4,22 @@ A *Matlab* class that generates an ecological community assambly by adding speci
 ## Contents
 
 - [Class](https://github.com/pmaldona/com_assembly#class)
--- [Constructor](https://github.com/pmaldona/com_assembly##constructor)
+-- [Constructor](https://github.com/pmaldona/com_assambly#constructor-nt_community)
+---[Inputs](https://github.com/pmaldona/com_assambly#inputs)
+---[Model](https://github.com/pmaldona/com_assambly#model)
+---[Outputs](https://github.com/pmaldona/com_assambly#outputs)
+----[Matices](https://github.com/pmaldona/com_assambly#matrices)
+----[Vectors](https://github.com/pmaldona/com_assambly#vectors)
+----[Doubles](https://github.com/pmaldona/com_assambly#doubles)
+----[Bools](https://github.com/pmaldona/com_assambly#bools)
+-- [Init assambly](https://github.com/pmaldona/com_assambly#init-assambly-nt_subcommunity_init_links)
+---[Inputs](https://github.com/pmaldona/com_assambly#inputs-1)
+---[Model](https://github.com/pmaldona/com_assambly#model-1)
 
 
 ## Class
 
-The class in defined in the file [NTCommunity.m](https://github.com/pmaldona/com_assembly/blob/master/src/NT_Comunity.m) which contain the Community constructor (master community). This comunity has a set of paramter that describe the intaraction model of the Community.  
+The class in defined in the file `NTCommunity.m` which contain the Community constructor (master community). This comunity has a set of paramter that describe the intaraction model of the Community.  
 
 ### Constructor `NT_Community`
 
@@ -141,7 +151,7 @@ Call: `Sc=NT_SubComunity_init_Links(C,S)`
 - `C` Master community Class object
 #### Model
 Constructions of sub-community starts from the master community (first initalized community). The process of assambly begins by taking an basal species. Once achived this, candidates to add are direct predetors of present species or new basal ones. This algorithm iterates until the `S` species are reached. The grow rates of the sub-community are directly taked from the master community `C` grow rates, as a subset of the present species. Sub-Community matrix is constructed in the same way as the master community, but only considering the susbet species in the sub-community. Then biomasses is calculeted via the known lineal trasnformation (<img src="https://latex.codecogs.com/svg.latex?\Large&space;\bold{r}=-\bold{A}\bold{x}^*">) and finally all other propertires (resilence, min of biomasses, etc.).
-### Outputs 
+#### Outputs 
 Returns a class object as constructor `NT_community`
 
 ### Add assambly `NT_SubComunity_add_Links`
