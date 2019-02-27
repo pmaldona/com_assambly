@@ -1,5 +1,6 @@
 function com_scale(Tr,cpi,fcp,mui,fmu,cmi,fcm,ami,fam,df,ani,fan,rit,mit,fas,mnti,nb,sg,sgd,tsp,msp,max_r,min_mort,rep,ind,bc)
-
+% Generated a file with "ind" extension of the parameter generated bay
+% Com_construc function.
 n=length(Tr);
 b=find(sum(Tr)==0);
 C=(length(find(Tr))*2+n+length(b)^2)/n^2;

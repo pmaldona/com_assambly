@@ -1,7 +1,5 @@
 classdef NT_Community
-    %UNTITLED5 Summary of this class goes here
-    %   Detailed explanation goes here
-    
+    %Class object for Ecological Community
     properties(Access = public)
         %Matrices
         adj
@@ -11,7 +9,7 @@ classdef NT_Community
         tp
         coef_C
         coef_b
-        %Vectores
+        %Vectors
         
         Nv
         esp
@@ -77,14 +75,14 @@ classdef NT_Community
         F
         bc
         
-        %función de probabilidad
+        %Probability function
         di
         
         
     end
     
     properties(Access=private)
-        %vector de indices
+        %Index vector of interacions
         idx
         
     end
@@ -93,7 +91,7 @@ classdef NT_Community
         
         
         function C = NT_Community(Tr,cp,fcp,mu,fmu,cm,fcm,am,fam,dnt,an,fan,rit,mit,fas,mnti,nbf,sg,sgd,tsp,msp,max_r,min_mort,tr_cal,res,dr,bc)
-            
+            % Master Community constructor
             if nargin < 13
             elseif mnti<sg*sqrt(3)
                 error('Mean should be grather that square tree times std');
@@ -122,28 +120,25 @@ classdef NT_Community
                 C.bc=bc;
                 C.mit=mit;
                 
+                %trophic level calculation
                 C = C.Tro_Pos(C.tr);
-                
+                %species index calculation
                 C.esp=1:length(C.Nv);
                 C.di=dnt;
                 C.rit=rit;
                 
+                % Trophic skeleton community matrix, resilen an feasibility
+                % calculation
                 n=length(C.Nv);
                 
-                %indices de la diagonal
                 for i = 1:n
                     d(i)=(i-1)*n+i;
                 end
                 
-                %Calculo de la matrix tipo para las interaciones tróficas
                 C=C.bc_assing();
                 C=C.type_matrix();
-                %resilencia inicial para el ciclo de while;
                 C.res=1e5;
-                
-                %claculo de resiliencia del bloque Trofico hasta conseguir la
-                %desada
-                
+              
                 B=zeros(n);
                 ted=(1/sgd^2-1)/2;
                 te=(mnti/sg^2-1)/2;
@@ -208,15 +203,10 @@ classdef NT_Community
                 C.me_tr=C.me;
                 C.L_tr=C.L;
                 
-                %Creación de los indices de la matrices y eliminación de los exitentes y la
-                %diagonal
+                %Added index calculation
                 C.idx=randperm(n*n);
                 C.idx(ismember(C.idx,d))=[];
                 C.idx(ismember(C.idx,find(C.adj)))=[];
-                
-                
-                %Montecarlo sobre permutación con score sobre el indice dependiendo de
-                %distibicion dnt y función de Atibuto Atr
                 
                 if(cp>0 || mu>0 || cm>0 || am>0 || an>0)
                     C = C.perm_gen();
@@ -230,7 +220,7 @@ classdef NT_Community
                 cm=round((n-1)*n*cm);
                 am=round((n-1)*n*am);
                 an=round((n-1)*n*an);
-                %Asignación de las interaciones no-tróficas a la matriz adjunta
+                
                 if(cp>0 || mu>0 || cm>0 || am>0 || an>0)
                     
                     while cp>0 || mu>0 || cm>0 || am>0 || an>0
@@ -259,8 +249,7 @@ classdef NT_Community
                 
                 
                 
-                %calculo de la matriz tipo y coeficiones de la matriz
-                %comunitaria para interaciónes no tróficas
+               %Community matrix, feasibility an stability calculation.
                 C=C.type_matrix();
                 C=C.re_assiang_an();
                 C=C.type_matrix();
@@ -350,19 +339,18 @@ classdef NT_Community
                 msp=C.msp;
                 te=(mnti/sg^2-1)/2;
                 
-                %algoritmo de selccíon de especies
+                %Species selection
                 
-                %se agregan las basales al pool
+                %basal are added to the pool
                 pool_b=find(sum(C.tr)==0);
-                %se agrega la primera especie basal a la sub comunidad
+                %first basal added
                 fs=pool_b(randi(numel(pool_b), 1, 1));
                 Sc.esp(1)=fs;
                 
                 
                 for i=1:(S-1)
                     for ii=Sc.esp
-                        % se agregan especies troficas directas a la basal
-                        % existene al pool
+                        %trophic or basa added
                         pool_b=[pool_b,find(C.tr(ii,:)==1)];
                     end
                     
@@ -503,8 +491,7 @@ classdef NT_Community
                 
                 for i=1:S
                     for ii=[Sc.esp,add_esp]
-                        % se agregan especies troficas directas a la basal
-                        % existene al pool
+                        %Trophic or basal species added
                         pool_b=[pool_b,find(C.tr(ii,:)==1)];
                     end
                     
@@ -678,7 +665,7 @@ classdef NT_Community
         %         end
         
         function C = inter_porp(C)
-            %Entrega el la medida de "no-troficidad" de la matriz de adyacencia ingresada C.adj
+            % calculates percentage of interactions of the community matrix
             
             if(isempty(C.tp))
                 C.type_matrix(C);
@@ -715,25 +702,21 @@ classdef NT_Community
         
         
         function C=perm_gen(C)
-            %Monte-Carlo de permutaciones en función de una distribución que
-            %favorece la posiciónes (favorece significa pornerlas en los
-            %primeros lugares del vector de indices) de la matriz respecto de distribución C.di
-            %determinadas por el atributo C.Nv  de cada especie que depende
-            %de función de atributo (en este caso Pos_tro "posición trofica").
+            %Monte-Carlo of permutations as a function of a distribution
+            %that favors the position (favors means putting them in the
+            %first places of the indices vector) of the community matrix 
+            %respect to distribution C.dnt determined by the attribute C.Nv 
+            %and the distance between the species.
             
+            %tophic level normalization
             amax=max(C.Nv);
             amin=min(C.Nv);
-            
-            %Normalización del atributo
             Ntl=(C.Nv-amin)/(amax-amin);
             psg=C.rit;
-            %Se determina el largo de vector de indices libres y la catidad
-            %de especies
             l=length(C.idx);
             la=length(C.esp);
             
-            %Función que calcula el score sobre cada posición de la matriz
-            %determinados por la distribución C.di y el Nivel.
+            % Function that calculates the score on each position
             function pri=por_idx(k)
                 e=k-la*floor((k-1)/la);
                 b=floor((k-1)/la)+1;
@@ -741,37 +724,30 @@ classdef NT_Community
                 pri=C.di(Ntl(e))/max(C.di(Ntl))*(normpdf(abs(Ntl(e)-Ntl(b)),C.mit,psg)/normpdf(1,C.mit,psg));
             end
             
-            %generación del vector de scores
+            % score vector generation
             pri=arrayfun(@por_idx,C.idx);
             
             
             %init output
             idt=[];
-            %Montecarlo para la iteración de vector de indices
+            %Montecarlo of indexes
             for m=1:(l-1)
-                
-                %probabilidad maxima
+
                 pm=max(pri/sum(pri));
-                %montecarlo
-                
                 pre=pm*rand();
-                %porbabilidad del pirmer indice
                 prr=pri(1)/sum(pri);
                 
-                %repite el proceso ( realiza el montecarlo)
                 while(pre>prr)
                     
                     perm=randperm(length(C.idx));
                     C.idx=C.idx(perm);
                     pri=pri(perm);
                     
-                    %C.idx=C.idx(randperm(length(C.idx)));
-                    %pri=arrayfun(@por_idx,C.idx);
                     
                     pre=pm*rand();
                     prr=pri(1)/sum(pri);
                 end
-                %Agrega el nuevo indice
+
                 idt=[idt,C.idx(1)];
                 C.idx(1)=[];
                 pri(1)=[];
@@ -781,20 +757,18 @@ classdef NT_Community
         end
         
         function C=assing_cp(C)
+            %competitive added interacion function
             
             n=length(C.esp);
             B=zeros(n);
             idx=C.idx;
             idx(ismember(idx,find(C.adj)))=[];
             idx(ismember(idx,find(transpose(C.adj))))=[];
-            %verificación de indices
             
             if(length(idx)>1)
                 
-                %Se agregan terminos traspuestos
                 cpi=[idx(1),n*(idx(1)-1)-(n^2-1)*floor((idx(1)-1)/n)+1];
                 B(cpi)=-1;
-                % se modifica la matriz
                 C.adj=C.adj+B;
             end
             C.idx(ismember(C.idx,find(C.adj)))=[];
@@ -802,22 +776,20 @@ classdef NT_Community
         end
         
         function C=assing_an(C)
+            %Trophic added interacion
             
             n=length(C.esp);
             B=zeros(n);
             idx=C.idx;
             idx(ismember(idx,find(C.adj)))=[];
             idx(ismember(idx,find(transpose(C.adj))))=[];
-            %verificación de indices
             
             if(length(idx)>1)
-                
-                %Se agregan terminos traspuestos
+
                 cpi=idx(1);
                 cpi_tr=n*(idx(1)-1)-(n^2-1)*floor((idx(1)-1)/n)+1;
                 B(cpi)=-1;
                 B(cpi_tr)=1;
-                % se modifica la matriz
                 C.adj=C.adj+B;
             end
             C.idx(ismember(C.idx,find(C.adj)))=[];
@@ -825,42 +797,40 @@ classdef NT_Community
         end
         
         function C=assing_mu(C)
+            % mutla added interaction
             
             n=length(C.esp);
             B=zeros(n);
             idx=C.idx;
             idx(ismember(idx,find(C.adj)))=[];
             idx(ismember(idx,find(transpose(C.adj))))=[];
-            %verificación de indices
             
             if(length(idx)>1)
-                
-                %Se agregan terminos traspuestos
+
                 cpi=[idx(1),n*(idx(1)-1)-(n^2-1)*floor((idx(1)-1)/n)+1];
                 B(cpi)=1;
-                % se modifica la matriz
                 C.adj=C.adj+B;
             end
             C.idx(ismember(C.idx,find(C.adj)))=[];
         end
         
         function C=assing_cm(C)
+            %commensal added interactions
             
             B=zeros(length(C.esp));
             idx=C.idx;
             idx(ismember(idx,find(C.adj)))=[];
             idx(ismember(idx,find(transpose(C.adj))))=[];
-            %verificación de indices
             
             if(length(idx)>0)
                 B(idx(1))=1;
-                % se modifica la matriz
                 C.adj=C.adj+B;
             end
             C.idx(ismember(C.idx,find(C.adj)))=[];
         end
         
         function C=assing_am(C)
+            %Ammensal added interaction
             
             B=zeros(length(C.esp));
             idx=C.idx;
@@ -877,6 +847,7 @@ classdef NT_Community
         end
         
         function C=re_assiang_an(C)
+            %Trophic interation reassingment to preferve basal species
             
             function ji=jd(x,y)
                 ji = 1 - sum(x & y)/sum(x | y);
@@ -895,43 +866,46 @@ classdef NT_Community
             
             while(ver)
                 
-                %posibles candidatos a basales con el fin de no modificar las
-                %basales existentes
+                % possible basal candidates that no modify the exisiting
+                % ones
                 pbc=find(sum(C.tr)~=0 & sum(C.tr_i)==0);
                 
                 n=sum(C.tr(:,pbc));
                 n=min(n(n~=0));
                 
-                %candidatos a basal con numero minimo de presas a eliminar
+                % Basal candidates with minimal preys to change
                 pbc=find(sum(C.tr)==n & sum(C.tr_i)==0);
-                %candidato basal sampleado
+         
+                %sampled basal candidate
                 can=datasample(pbc,1);
                 
-                %for sobre presas del canidato a remplazar
+                % for loop over preys to remplace
                 A=C.tr;
                 
-                %Lugares posibles de assignación donde no existan
-                %interaciones previas.
+                % Possible assignment places where didn't exsist previos
+                % ones.
                 A_tp=C.tp;
                 
-                %presa a remplazar sin modificar la matriz trófica inicial
+                % preys to remplace without modifying trophic skeleton
+                % matrix
                 j=find(C.tr(:,can))';
                 for i=j
-                    %candidatos a remplazo que no contengan a i como presa
+                    %Replacement candidates that do not contain i as a prey
+                    
                     r_can=find(~A_tp(i,:) & sum(A)~=0);
                     r_can(r_can==can)=[];
                     r_can(r_can==i)=[];
                     if(isempty(r_can))
-                        % si no existen candidates de remplazo, se elimina la
-                        % interacción
+                      % if there are no replacement candidates, the 
+                      % interaction is eliminated
                         A(i,can)=0;
                         continue;
                     end
                     
-                    %vector de distancia en similitud de los candidatos
+                    %vector of distance of similarity of the candidates
                     sim=zeros(length(r_can),1);
                     l=length(r_can);
-                    %calculo vector de distancia en similitud
+                    %vector of similarity distance calculation 
                     for ii=1:l
                         
                         if(ii==can)
@@ -941,15 +915,15 @@ classdef NT_Community
                         end
                         
                     end
-                    %calculo de vector de distancia respecto al nivel trófico
+                    %vector of tophic level distance calculation
                     r_tn=abs(C.Nv(r_can)-C.Nv(can)+1)/max(abs(C.Nv(r_can)-C.Nv(can)+1));
-                    %calulo final del vector de eleeción como multiplicacion
-                    %del vector de distancias de nivel trófico y del vector de similitud
+                    % finally  election vector is the product of similarity
+                    % vector by the tophic distance vector.
                     r_tn=r_tn.*sim;
-                    % indice como minimo del vetor de elección
+                    % choosed index is index the minimun of electon vector
                     [scr,ind]=min(r_tn);
                     
-                    %remplazo del link trófico
+                    %trophic link remplacement
                     A(i,r_can(ind))=1;
                     A(i,can)=0;
                     
@@ -969,8 +943,9 @@ classdef NT_Community
         end
         
         function C=Feas_r_bt(C)
-            %UNTITLED2 Summary of this function goes here
-            %   Detailed explanation goes here
+            %Fasibility domain calculation via a ployhedra intersection
+            %(not in use)
+    
             addpath('/home/pmaldona/Documents/MATLAB/Add-ons/bt-1.1')
             S1=size(C.com);
             
@@ -1024,8 +999,8 @@ classdef NT_Community
         end
         
         function C=Feas_cen(C)
-            %UNTITLED2 Summary of this function goes here
-            %   Detailed explanation goes here
+            %Feasibility and grow rate calulation via centroid calculation
+            %(not in use)
             
             C.R=mean(normc(-C.com)');
             C.R=C.R'/norm(C.R,Inf);
@@ -1047,6 +1022,7 @@ classdef NT_Community
 
         
         function C = is_feasible(C)
+            % LP-feasibility calulation.
             
             max_r=C.max_r;
             min_mort=C.min_mort;
@@ -1109,7 +1085,7 @@ classdef NT_Community
         end
         
         function C=bc_assing(C)
-            %interación de competencia en las basales
+            %Basal competitive interacion addind
             if(C.bc)
                 bas=find(sum(C.tr)==0);
                 
@@ -1125,7 +1101,7 @@ classdef NT_Community
         
         
         function C= type_matrix(C)
-            
+            %type matrix calulation
             n=length(C.esp);
             C.tp=zeros(n);
             for i=1:n
@@ -1161,7 +1137,7 @@ classdef NT_Community
         end
         
         function C=prop(C)
-            
+            %Summary of properties calulation
             
             if(C.mst)
                 %                 C=C.Feas_r_bt();

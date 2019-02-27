@@ -1,5 +1,7 @@
 function [A,B,R,R_tr,L,L_tr,bas_e,con,con_tr,cp,mu,am,cm,an,me,me_tr,gama,gama_tr,var,var_tr,eta,eta_tr,ict,Nv,dist,x,r] = Com_construc(Tr,cpi,fcp,mui,fmu,cmi,fcm,ami,fam,dnt,ani,fan,rit,mit,fas,mnti,nb,sg,sgd,tsp,msp,max_r,min_mort,it,bc)
-
+%Calculates in fuctions of inputs parameter of NT_Community, assemblys
+%adding one by one species. Here it is a parameter of repetitions. A set
+%parameters are saved.
 N=length(Tr);
 
 

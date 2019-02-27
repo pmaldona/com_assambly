@@ -30,7 +30,7 @@ The class in defined in the file `NTCommunity.m` which contain the Community con
 ### Constructor `NT_Community`
 
 Call:
-`NT_community(Tr,cp,fcp,mu,fmu,cm,fcm,am,fam,dnt,an,fan,rit,mit,fas,mnti,nbf,sg,sgd,tsp,msp,max_r,bc)`
+``NT_community(Tr,cp,fcp,mu,fmu,cm,fcm,am,fam,dnt,an,fan,rit,mit,fas,mnti,nbf,sg,sgd,tsp,msp,max_r,tr_cal,res,dr,bc)`
 
 #### Inputs
 The inputs defines model and interaction type of the community matrix, and conditions of the grow rates:
@@ -57,6 +57,9 @@ The inputs defines model and interaction type of the community matrix, and condi
 - `msp` Overall spendig time factor (1 non-spending time model, 0 Holling type-1 model)
 - `max_r` Maximum value of grow-rate (imposition for LP-optimization)
 - `min_mort` Minimum value of non basal grow-rate (imposition for LP-optimization)
+- `tr_cal` Bool value to force resilience of the trophic initial community (tophic skeleton community)
+- `res` Resilience for the trophic initial community (if `tr_cal` is `true`)
+- `dr` Range of acceptance for resilience(`res` <img src="https://latex.codecogs.com/svg.latex?\pm"> `dr`, if `tr_cal` is `true`)   
 - `bc` basal Competition (bool value, that if it's true, add competition between basal species)
  #### Model
 Our goal is analize the stablitiy and feasibility of matrix a bases dynamics ecology system model. Where the vector biomases <img src="https://latex.codecogs.com/svg.latex?\bold{x}"> a  determined by:
@@ -69,7 +72,7 @@ In first instance, initial tropic interactions are obtained form the `Tr` matrix
 
 ![img](https://latex.codecogs.com/svg.latex?\mathbb{P}_{ij}\propto%20f_d(tl_n(i))\exp\left({\frac{|tl_n(i)-tl_n(j)|-\mu_{it}}{\sigma_r}}\right))
 
-where <img src="https://latex.codecogs.com/svg.latex?;tl_n(i)"> is the normalized trophic level ([Livine](https://www.sciencedirect.com/science/article/pii/002251938090288X)) of species <img src="https://latex.codecogs.com/svg.latex?i">, <img src="https://latex.codecogs.com/svg.latex?f_d"> correspond to the `dfn` function (matlab `@` call), and <img src="https://latex.codecogs.com/svg.latex?\mu_{ti}"> and <img src="https://latex.codecogs.com/svg.latex?\sigma_r"> correspond to `mit`and `rit` respectively. In the adding interaction process, the basal species of `Tr` are preserved. Finally the bool value `bc` add competition between basal species.
+where <img src="https://latex.codecogs.com/svg.latex?;tl_n(i)"> is the normalized trophic level ([Livine](https://www.sciencedirect.com/science/article/pii/002251938090288X)) of species <img src="https://latex.codecogs.com/svg.latex?i">, <img src="https://latex.codecogs.com/svg.latex?f_d"> correspond to the `dfn` function (matlab `@` call), and <img src="https://latex.codecogs.com/svg.latex?\mu_{ti}"> and <img src="https://latex.codecogs.com/svg.latex?\sigma_r"> correspond to `mit`and `rit` respectively. In the adding interactions process, the basal species of `Tr` are preserved. Finally the bool value `bc` add competition between basal species.
 
 The non-diagonal community matrix coefficients <img src="https://latex.codecogs.com/svg.latex?A_{ij}"> are defined by holling type I model:
 
@@ -87,7 +90,17 @@ so we have:
 
 <img src="https://latex.codecogs.com/svg.latex?\bold{r}=-\bold{A}\bold{x^*}">
 
-<img src="https://latex.codecogs.com/svg.latex?\bold{x}^*"> represents satbility point for the biomases. At this point we have freedom of choise for the grow rate <img src="https://latex.codecogs.com/svg.latex?\bold{r}"> and so <img src="https://latex.codecogs.com/svg.latex?\bold{x}^*"> due there are releted by lineal transformation. To solve this, we search the feasibility via an LP-optimization that maximize the minimal of bioases <img src="https://latex.codecogs.com/svg.latex?\text{min}(\{x_i\})"> holding the related equality, boundig the grow rates via a Chebyshov norm, <img src="https://latex.codecogs.com/svg.latex?\|\bold{r}\|_{\infty}<m_r"> and lower bound non-basal grow rates <img src="https://latex.codecogs.com/svg.latex?r_i>m_m">.   Here <img src="https://latex.codecogs.com/svg.latex?m_m="> `min_mort` and <img src="https://latex.codecogs.com/svg.latex?m_r="> `max_r`. 
+<img src="https://latex.codecogs.com/svg.latex?\bold{x}^*"> represents stability point of biomasses. At this point we have freedom of choise for the grow rates <img src="https://latex.codecogs.com/svg.latex?\bold{r}"> and so <img src="https://latex.codecogs.com/svg.latex?\bold{x}^*"> (biomasses), due there are related by lineal transformation. To solve this, we search the feasibility via an LP-optimization that maximize the minimal of biomasses <img src="https://latex.codecogs.com/svg.latex?\text{min}(\{x_i\})">, holding the related equality, boundig the grow rates via a Chebyshov norm, <img src="https://latex.codecogs.com/svg.latex?\|\bold{r}\|_{\infty}<m_r"> and lower bound non-basal grow rates <img src="https://latex.codecogs.com/svg.latex?r_i>m_m">.   Here <img src="https://latex.codecogs.com/svg.latex?m_m="> `min_mort` and <img src="https://latex.codecogs.com/svg.latex?m_r="> `max_r`.
+
+Resilience is equal to minus the maximum eigenvalue of the Jacobean evaluated at the stability point <img src="https://latex.codecogs.com/svg.latex?\bold{x}^*">:
+
+<img src="https://latex.codecogs.com/svg.latex?R=-\lambda^{\uparrow}_1(J(x^*))=-\lambda^{\uparrow}_1(\text{diag}(\bold{x}^*)\bold{A})">
+
+So, if <img src="https://latex.codecogs.com/svg.latex?\Large&space;R>0"> then the community is locally stable, if <img src="https://latex.codecogs.com/svg.latex?\Large&space;R<0"> then is locally unstable.
+
+We first calculate the resilience and feasibility of the trophic skeleton community matrix, associated to their interactions (without considering added interactions). If `tr_cal` = `true` the program it will calculate resilience until <img src="https://latex.codecogs.com/svg.latex?R="> `res`<img src="https://latex.codecogs.com/svg.latex?\pm"> `dr` is reached (this step it's a little tricky because it enters in a while loop, and the program maybe can't exit the loop. It's better use `tr_cal`=`false`). After this, the rest interactions are adeed and feasibility and resilience calculated.
+
+
 
 #### Outputs
 
@@ -137,12 +150,6 @@ The output constitute a structure that contain a set of properties and variables
 - `bas` number of basal species of the community
 - `L` minimal of biomasses
 - `L_tr` minimal of biomasses of the trophic skeleton community
-
-Resilience is equal to minus the maximum eigenvalue of the Jacobean evaluated at the stability point <img src="https://latex.codecogs.com/svg.latex?\bold{x}^*">:
-
-<img src="https://latex.codecogs.com/svg.latex?R=-\lambda^{\uparrow}_1(J(x^*))=-\lambda^{\uparrow}_1(\text{diag}(\bold{x}^*)\bold{A})">
-
-So, if <img src="https://latex.codecogs.com/svg.latex?\Large&space;R>0"> then the community is locally stable, if <img src="https://latex.codecogs.com/svg.latex?\Large&space;R<0"> then is locally unstable.
 
 ##### Bools
 - `mst` True if community is a aster one (first constructed)
