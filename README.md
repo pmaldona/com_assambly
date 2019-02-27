@@ -30,7 +30,7 @@ The class in defined in the file `NTCommunity.m` which contain the Community con
 ### Constructor `NT_Community`
 
 Call:
-``NT_community(Tr,cp,fcp,mu,fmu,cm,fcm,am,fam,dnt,an,fan,rit,mit,fas,mnti,nbf,sg,sgd,tsp,msp,max_r,tr_cal,res,dr,bc)`
+`NT_community(Tr,cp,fcp,mu,fmu,cm,fcm,am,fam,dnt,an,fan,rit,mit,fas,mnti,nbf,sg,sgd,tsp,msp,max_r,tr_cal,res,dr,bc)`
 
 #### Inputs
 The inputs defines model and interaction type of the community matrix, and conditions of the grow rates:
